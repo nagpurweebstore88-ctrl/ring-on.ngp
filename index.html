@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ring On.NGP</title>
+<link rel="icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Pirata+One&display=swap" rel="stylesheet">
+<style>
+/* Layout concept: chrome-on-black storefront. A blurred chain wall sits behind one framed header; each category opens as a framed card. */
+:root{
+  color-scheme:dark;
+  --bg:#050507; --card:#0c0c11; --ink:#eeeef3; --dim:#a6a6b1; --edge:#7c7c87; --line:#2a2a33;
+  --chrome:linear-gradient(180deg,#ffffff 0%,#c9c9ce 40%,#80808a 55%,#ececf0 100%);
+  --glow:rgba(220,220,236,.28);
+  --display:'Pirata One','Impact',serif; --label:'Cinzel',Georgia,serif; --body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;padding-bottom:96px}
+button,select,input,textarea{font:inherit;color:var(--ink)}
+button{cursor:pointer}
+:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.chrome{background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 6px rgba(190,190,210,.14))}
+
+/* blurred chain wall */
+.wall{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#050507}
+.wall svg{width:100%;height:100%;filter:blur(7px);opacity:.55;transform:scale(1.08)}
+.wall::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 10%,rgba(150,150,170,.16),transparent 60%),radial-gradient(ellipse at 50% 50%,transparent 35%,rgba(0,0,0,.88) 100%)}
+
+header{background:rgba(5,5,7,.55);text-align:center;padding:26px 16px 22px;border-bottom:1px solid var(--edge);box-shadow:0 6px 0 -5px rgba(124,124,135,.45),0 10px 40px -14px var(--glow)}
+header h1{line-height:0}
+.logo{width:min(90vw,400px);height:auto;mix-blend-mode:screen}
+.tagline{font-family:var(--label);font-weight:600;font-size:.8rem;letter-spacing:.24em;padding-left:.24em;text-transform:uppercase;color:#d4d4da;margin-top:6px}
+.range{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(3,auto);justify-content:center;gap:2px 22px}
+.range li{font-family:var(--display);font-size:1.5rem;line-height:1.2}
+@media(min-width:560px){
+  .tagline{font-size:.95rem;letter-spacing:.34em;padding-left:.34em}
+  .range{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0}
+  .range li+li::before{content:"\25C6";font-family:var(--body);font-size:.55rem;color:var(--edge);vertical-align:middle;margin:0 .7em}
+}
+.orn{display:block;margin:14px auto 0;max-width:100%}
+.lead{margin:12px auto 0;max-width:46ch;color:var(--dim)}
+
+.tools{max-width:980px;margin:0 auto;padding:16px 16px 0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.row .full{grid-column:1/-1}
+input,textarea,select{width:100%;background:var(--card);border:1px solid var(--edge);border-radius:2px;padding:10px 12px}
+select option{background:var(--card)}
+label.l{display:block;font-size:.85rem;color:var(--dim);margin-bottom:3px}
+.sec{font-family:var(--display);font-weight:400;font-size:1.9rem;line-height:1.1;margin:6px 0 12px;text-wrap:balance}
+#home{max-width:980px;margin:0 auto;padding:18px 16px}
+.folders{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(min-width:700px){.folders{grid-template-columns:repeat(3,1fr)}}
+.fold{background:var(--card);border:1px solid var(--edge);border-radius:2px;outline:1px solid rgba(124,124,135,.35);outline-offset:3px;overflow:hidden;padding:0;text-align:center;min-width:0}
+.fold:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cov{aspect-ratio:4/3;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#1f1f28,#0a0a0e 72%);overflow:hidden}
+.cov .ico{width:34%;color:#a2a2ae}
+.cov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fold b{display:block;padding:10px 8px 0;font-family:var(--display);font-weight:400;font-size:1.35rem;line-height:1.15}
+.fold small{display:block;padding-bottom:12px;color:var(--dim)}
+.back{background:rgba(5,5,7,.6);border:1px solid var(--edge);border-radius:2px;padding:6px 14px;font-family:var(--label);font-weight:600;letter-spacing:.04em}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:18px 16px;max-width:980px;margin:0 auto}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--card);border:1px solid var(--edge);border-radius:2px;outline:1px solid rgba(124,124,135,.35);outline-offset:3px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;min-width:0}
+.card:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.pic{aspect-ratio:1;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#1f1f28,#0a0a0e 72%)}
+.pic .ico{width:40%;color:#a2a2ae}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:8px;left:8px;z-index:1;background:var(--chrome);color:#0a0a0d;font-family:var(--label);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:2px}
+.info{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.name{font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.meta{font-size:.82rem;color:var(--dim)}
+.price{font-weight:700;font-size:1.2rem;margin-top:auto;padding-top:4px}
+.add{background:var(--chrome);color:#0a0a0d;border:none;border-radius:2px;padding:8px;font-family:var(--label);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem}
+.add:active{transform:scale(.97)}
+.add[disabled]{background:#26262d;color:#85858f;cursor:not-allowed}
+.empty{padding:40px 16px;text-align:center;grid-column:1/-1;color:var(--dim)}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:#08080b;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:none;justify-content:space-between;align-items:center;gap:12px;z-index:9;border-top:1px solid var(--edge)}
+.bar.on{display:flex}
+.bar button{background:var(--chrome);color:#0a0a0d;border:none;border-radius:2px;padding:9px 18px;font-family:var(--label);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.85rem}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:10;display:none;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex}
+.panel{background:var(--bg);width:100%;max-width:560px;max-height:92%;overflow:auto;border:1px solid var(--edge);border-radius:4px 4px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.panel h2{font-family:var(--display);font-weight:400;font-size:1.8rem;margin-bottom:10px}
+.line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:32px;height:32px;border:1px solid var(--edge);border-radius:2px;background:transparent;font-weight:700}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.15rem;padding:12px 0}
+.panel label{display:block;font-weight:700;margin:10px 0 4px}
+.send{display:block;text-align:center;text-decoration:none;width:100%;margin-top:14px;background:#25D366;color:#04120a;border-radius:2px;padding:12px;font-weight:700;font-size:1.05rem}
+.close{float:right;background:none;border:none;font-size:1.8rem;line-height:1}
+.note{font-size:.85rem;color:var(--dim);margin-top:8px}
+
+footer{text-align:center;padding:22px 16px;font-size:.9rem;background:rgba(5,5,7,.72)}
+footer.help{border-top:1px solid var(--edge);box-shadow:0 -6px 24px -12px var(--glow)}
+footer a{color:var(--ink);font-weight:700}
+
+.pv{position:fixed;inset:0;z-index:8;background:var(--bg);overflow:auto;padding-bottom:110px}
+.pvtop{position:sticky;top:0;z-index:2;padding:10px 14px;background:rgba(5,5,7,.92)}
+.zoom{position:relative;height:62vh;background:#08080b;overflow:hidden;touch-action:none;user-select:none}
+.zoom img{width:100%;height:100%;object-fit:contain;display:block}
+.zico{position:absolute;inset:0;display:grid;place-items:center;color:#8f8f9b}
+.zico svg{width:30%;max-width:180px}
+.zc{position:absolute;right:10px;bottom:10px;display:flex;gap:6px}
+.zc button{background:rgba(5,5,7,.85);border:1px solid var(--edge);border-radius:2px;padding:4px 12px;font-weight:700}
+.zh{position:absolute;left:10px;bottom:12px;font-size:.75rem;color:var(--dim)}
+.pd{max-width:640px;margin:0 auto;padding:16px}
+.pn{font-family:var(--display);font-weight:400;font-size:2rem;line-height:1.15;text-wrap:balance}
+.pd .price{font-size:1.6rem;margin:6px 0 10px}
+.pd .add{width:100%;padding:12px;font-size:.95rem}
+.spec{width:100%;border-collapse:collapse;margin-top:16px}
+.spec td{padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.spec td:first-child{color:var(--dim);width:40%}
+.wa{display:block;text-align:center;margin-top:14px;color:#25D366;font-weight:700}
+
+.toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:20;max-width:calc(100vw - 32px);background:#17171d;border:1px solid var(--edge);padding:10px 16px;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wall" id="wall" aria-hidden="true"></div>
+
+<header>
+  <h1><img class="logo" src="images/logo.png" width="760" height="623" alt="Ring On.NGP"></h1>
+  <p class="tagline">Gothic accessories &middot; Nagpur</p>
+  <ul class="range chrome" aria-label="What we sell">
+    <li>Rings</li><li>Pendants</li><li>Chains</li><li>Earrings</li><li>Bracelets</li><li>&amp; more</li>
+  </ul>
+  <svg class="orn" width="260" height="16" viewBox="0 0 260 16" fill="none" aria-hidden="true"><path d="M0 8H100M160 8H260" stroke="#8e8e95"/><path d="M130 1v14M124 5h12" stroke="#ececf0" stroke-width="1.5"/><path d="M110 4l4 4-4 4-4-4zM150 4l4 4-4 4-4-4z" fill="#b9b9c0"/></svg>
+  <p class="lead">Choose your pieces, add them to the cart and send the order on WhatsApp. We confirm everything in chat.</p>
+</header>
+
+<main id="home"><h2 class="sec chrome">Shop by category</h2><div class="folders" id="folders"></div></main>
+
+<section id="folder" hidden>
+  <div class="tools">
+    <button class="back" id="back">&larr; All categories</button>
+    <h2 class="sec chrome" id="ftitle" style="margin-top:12px"></h2>
+    <div class="row">
+      <div class="full"><label class="l" for="style">Style</label><select id="style"></select></div>
+      <div class="full"><input id="q" type="search" placeholder="Search in this category" aria-label="Search products"></div>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<div class="pv" id="pv" hidden>
+  <div class="pvtop"><button class="back" id="pback">&larr; Back</button></div>
+  <div class="zoom" id="zoom">
+    <img id="zimg" alt="" draggable="false">
+    <div class="zico" id="zico"></div>
+    <span class="zh">Pinch, scroll or double-tap to zoom</span>
+    <div class="zc"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zreset">Reset</button></div>
+  </div>
+  <div class="pd" id="pd"></div>
+</div>
+
+<footer>
+  <p>Instagram: <a id="ig" href="#" target="_blank" rel="noopener"></a></p>
+</footer>
+<footer class="help">
+  <p>Need help with an order? Message us on <a id="wa1" href="#" target="_blank" rel="noopener"></a> or call <a id="call1" href="#"></a></p>
+</footer>
+
+<div class="bar" id="bar"><span id="barText"></span><button id="open">View cart</button></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Your cart">
+  <div class="panel">
+    <button class="close" id="close" aria-label="Close">&times;</button>
+    <h2>Your cart</h2>
+    <div id="lines"></div>
+    <div class="total"><span>Total</span><span id="total"></span></div>
+    <label for="nm">Your name</label><input id="nm" autocomplete="name">
+    <label for="ad">Delivery address with pincode</label><textarea id="ad" rows="3" autocomplete="street-address"></textarea>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">Send order on WhatsApp</a>
+    <p class="note">WhatsApp opens with your order typed out. Press send there. Delivery charges are confirmed in chat.</p>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== EDIT THIS SECTION ===== */
+const SHOP = {
+  whatsapp: "917972081085",          // 91 + your 10-digit number, no + or spaces
+  whatsappText: "+91 79720 81085",
+  call: "918983790150",
+  callText: "+91 89837 90150",
+  instagram: "ring.on.ngp"
+};
+const CATEGORIES = ["Rings","Pendants","Chains","Earrings","Bracelets","More Accessories"];
+/* style: filter label such as "Gothic" or "Minimal". material and size are optional and shown on the product page.
+   stock: exact number in hand; at 0 it shows Sold out. image: file name inside the images folder without .jpg, like "skull-ring". tag: "New" or "".
+   The items below are SAMPLES. Replace them with your own products before you publish. */
+const PRODUCTS = [
+  {id:1,name:"Sample Ring 01",cat:"Rings",style:"Gothic",material:"",size:"Adjustable",note:"Sample item. Replace with your own piece.",stock:5,price:499,image:"",tag:"Sample"},
+  {id:2,name:"Sample Ring 02",cat:"Rings",style:"Minimal",material:"",size:"Adjustable",note:"Sample item. Replace with your own piece.",stock:1,price:399,image:"",tag:"Sample"},
+  {id:3,name:"Sample Pendant 01",cat:"Pendants",style:"Gothic",material:"",size:"",note:"Sample item. Replace with your own piece.",stock:3,price:599,image:"",tag:"Sample"},
+  {id:4,name:"Sample Chain 01",cat:"Chains",style:"Gothic",material:"",size:"20 in",note:"Sample item. Replace with your own piece.",stock:4,price:699,image:"",tag:"Sample"},
+  {id:5,name:"Sample Earrings 01",cat:"Earrings",style:"Gothic",material:"",size:"",note:"Sample item. Replace with your own piece.",stock:6,price:349,image:"",tag:"Sample"},
+  {id:6,name:"Sample Bracelet 01",cat:"Bracelets",style:"Gothic",material:"",size:"Adjustable",note:"Sample item. Replace with your own piece.",stock:3,price:549,image:"",tag:"Sample"},
+  {id:7,name:"Sample Accessory 01",cat:"More Accessories",style:"Gothic",material:"",size:"",note:"Sample item. Replace with your own piece.",stock:2,price:299,image:"",tag:"Sample"}
+];
+/* ===== END EDIT SECTION ===== */
+
+const $ = id => document.getElementById(id);
+const rs = n => "₹" + n.toLocaleString("en-IN");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let cat = "", style = "", term = "", cart = {}, last = "", nav = 0, tt = 0;
+
+const SV = d => `<svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${d}</svg>`;
+const ICONS = {
+  "Rings": SV('<circle cx="32" cy="40" r="15"/><path d="M25 21l7-11 7 11-7 7z"/>'),
+  "Pendants": SV('<path d="M10 8c4 18 16 24 22 24s18-6 22-24"/><path d="M32 32l9 11-9 15-9-15z"/>'),
+  "Chains": SV('<rect x="6" y="22" width="30" height="18" rx="9"/><rect x="28" y="26" width="30" height="18" rx="9"/>'),
+  "Earrings": SV('<circle cx="20" cy="12" r="3"/><path d="M20 15v11"/><path d="M20 26l7 10-7 14-7-14z"/><circle cx="44" cy="12" r="3"/><path d="M44 15v11"/><path d="M44 26l7 10-7 14-7-14z"/>'),
+  "Bracelets": SV('<ellipse cx="32" cy="32" rx="23" ry="15"/><ellipse cx="32" cy="32" rx="16" ry="9"/>'),
+  "More Accessories": SV('<path d="M32 6l6 20 20 6-20 6-6 20-6-20-20-6 20-6z"/>')
+};
+const iconFor = c => ICONS[c] || ICONS["More Accessories"];
+
+/* blurred chain wall behind the page */
+(function(){
+  const link = (y,k) => k%2 ? `<ellipse cx="0" cy="${y}" rx="6" ry="20" fill="url(#cg)"/>` : `<ellipse cx="0" cy="${y}" rx="15" ry="28" fill="none" stroke="url(#cg)" stroke-width="8"/>`;
+  const strand = Array.from({length:26},(_,k)=>link(k*40,k)).join("");
+  $("wall").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5f5f7"/><stop offset=".5" stop-color="#6f6f77"/><stop offset="1" stop-color="#d6d6da"/></linearGradient></defs>
+  <g transform="translate(-20 -30) rotate(-32) scale(1.5)">${strand}</g>
+  <g transform="translate(430 -40) rotate(28) scale(1.3)">${strand}</g>
+  <g transform="translate(-30 780) rotate(215) scale(1.1)" opacity=".8">${strand}</g>
+  <g transform="translate(420 820) rotate(-205) scale(1.4)" opacity=".8">${strand}</g></svg>`;
+})();
+
+$("ig").textContent = "@" + SHOP.instagram;
+$("ig").href = "https://instagram.com/" + SHOP.instagram;
+$("wa1").textContent = SHOP.whatsappText;
+$("wa1").href = "https://wa.me/" + SHOP.whatsapp;
+$("call1").textContent = SHOP.callText;
+$("call1").href = "tel:+" + SHOP.call;
+
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("on"),2800); }
+
+const imgTag = (p,alt) => `<img src="images/${esc(p.image)}.jpg" alt="${esc(alt)}" loading="lazy" onerror="this.remove()">`;
+
+function grid(){
+  const list = PRODUCTS.filter(p =>
+    p.cat===cat && (!style||p.style===style) &&
+    (p.name+" "+(p.style||"")+" "+(p.material||"")+" "+p.cat+" "+(p.kw||"")).toLowerCase().includes(term));
+  $("grid").innerHTML = list.length ? list.map(p => `
+    <article class="card" data-id="${p.id}" tabindex="0">
+      <div class="pic">
+        ${iconFor(p.cat)}${p.image ? imgTag(p,p.name) : ""}
+        ${p.stock<=0 ? '<span class="tag">Sold out</span>' : p.stock<=2 ? `<span class="tag">Only ${p.stock} left</span>` : p.tag ? `<span class="tag">${esc(p.tag)}</span>` : ""}
+      </div>
+      <div class="info">
+        <div class="name">${esc(p.name)}</div>
+        <div class="meta">${esc([p.style,p.material,p.size].filter(Boolean).join(", ") || p.cat)}</div>
+        <div class="meta">${p.stock>0 ? p.stock+" in stock" : "Out of stock"}</div>
+        <div class="price">${rs(p.price)}</div>
+        <button class="add" data-id="${p.id}" ${p.stock<=0?"disabled":""}>${p.stock<=0?"Sold out":"Add to cart"}</button>
+      </div>
+    </article>`).join("") : '<p class="empty">Nothing here yet. New pieces are coming soon.</p>';
+}
+function add(id){
+  const p = PRODUCTS.find(x=>x.id==id);
+  if((cart[id]||0)>=p.stock){ toast("Only "+p.stock+" in stock for "+p.name); return; }
+  cart[id]=(cart[id]||0)+1; update(); toast(p.name+" added to your cart");
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".add"); if(b){ e.stopPropagation(); add(b.dataset.id); return; }
+  const c=e.target.closest("#grid .card"); if(c) location.hash="#/p/"+c.dataset.id;
+  const f=e.target.closest("[data-f]"); if(f) location.hash="#/c/"+encodeURIComponent(f.dataset.f);
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){ const c=e.target.closest&&e.target.closest("#grid .card"); if(c && e.target===c) location.hash="#/p/"+c.dataset.id; }
+});
+$("back").onclick=()=>{location.hash="#/"};
+$("pback").onclick=()=>{ nav>0 ? history.back() : location.hash="#/c/"+encodeURIComponent(cat); };
+$("style").onchange=e=>{style=e.target.value;grid();};
+$("q").oninput=e=>{term=e.target.value.toLowerCase();grid();};
+
+function home(){
+  $("folders").innerHTML = CATEGORIES.map(c=>{
+    const l=PRODUCTS.filter(p=>p.cat===c), cv=l.find(p=>p.image);
+    return `<button class="fold" data-f="${esc(c)}"><div class="cov">${iconFor(c)}${cv?imgTag(cv,""):""}</div><b class="chrome">${esc(c)}</b><small>${l.length?l.length+" piece"+(l.length>1?"s":""):"Coming soon"}</small></button>`;
+  }).join("");
+}
+
+/* zoomable photo */
+const zb=$("zoom"), pts=new Map(); let z={s:1,x:0,y:0}, d0=0, s0=1;
+const dist=()=>{const [a,b]=[...pts.values()];return Math.hypot(a.x-b.x,a.y-b.y);};
+function zapply(){ const r=zb.getBoundingClientRect(), mx=(z.s-1)*r.width/2, my=(z.s-1)*r.height/2;
+  z.x=Math.max(-mx,Math.min(mx,z.x)); z.y=Math.max(-my,Math.min(my,z.y));
+  $("zimg").style.transform=`translate(${z.x}px,${z.y}px) scale(${z.s})`; }
+function zset(v){ z.s=Math.max(1,Math.min(5,v)); zapply(); }
+zb.addEventListener("pointerdown",e=>{ if(e.target.closest(".zc"))return; zb.setPointerCapture(e.pointerId); pts.set(e.pointerId,{x:e.clientX,y:e.clientY}); if(pts.size==2){d0=dist();s0=z.s;} });
+zb.addEventListener("pointermove",e=>{ const o=pts.get(e.pointerId); if(!o)return;
+  const n={x:e.clientX,y:e.clientY}; pts.set(e.pointerId,n);
+  if(pts.size==1&&z.s>1){z.x+=n.x-o.x;z.y+=n.y-o.y;zapply();}
+  else if(pts.size==2){zset(s0*dist()/d0);} });
+["pointerup","pointercancel"].forEach(t=>zb.addEventListener(t,e=>pts.delete(e.pointerId)));
+zb.addEventListener("wheel",e=>{e.preventDefault();zset(z.s*(e.deltaY<0?1.15:1/1.15));},{passive:false});
+zb.addEventListener("dblclick",()=>zset(z.s>1?1:2.5));
+$("zin").onclick=()=>zset(z.s*1.5); $("zout").onclick=()=>zset(z.s/1.5); $("zreset").onclick=()=>zset(1);
+
+function openP(p){
+  z={s:1,x:0,y:0}; const im=$("zimg");
+  im.onerror=()=>{ im.hidden=true; $("zico").innerHTML=iconFor(p.cat); };
+  im.hidden=!p.image; im.removeAttribute("src");
+  if(p.image){ im.src="images/"+p.image+".jpg"; im.alt=p.name; $("zico").innerHTML=""; } else $("zico").innerHTML=iconFor(p.cat);
+  zapply();
+  const rows=[["Style",p.style],["Material",p.material],["Size",p.size],["Category",p.cat],["Details",p.note],["Availability",p.stock>0?(p.stock<=2?"Only "+p.stock+" left":p.stock+" in stock"):"Sold out"]].filter(r=>r[1]);
+  const q=encodeURIComponent(`Hi Ring On.NGP! I have a question about ${p.name} (${rs(p.price)}).`);
+  $("pd").innerHTML=`<h2 class="pn chrome">${esc(p.name)}</h2><div class="price">${rs(p.price)}</div>
+  <button class="add" data-id="${p.id}" ${p.stock<=0?"disabled":""}>${p.stock<=0?"Sold out":"Add to cart"}</button>
+  <table class="spec">${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>
+  <p class="note">We confirm every order on WhatsApp. Delivery details and charges are shared in chat.</p>
+  <a class="wa" target="_blank" rel="noopener" href="https://wa.me/${SHOP.whatsapp}?text=${q}">Ask about this on WhatsApp</a>`;
+  $("pv").hidden=false; $("pv").scrollTop=0; document.body.style.overflow="hidden";
+}
+function route(){
+  const m=decodeURIComponent(location.hash.slice(1)).split("/"); let p=null;
+  if(m[1]==="p"){ p=PRODUCTS.find(x=>x.id==m[2]); cat=p?p.cat:""; } else cat=m[1]==="c"?m.slice(2).join("/"):"";
+  const inF=CATEGORIES.includes(cat);
+  $("home").hidden=inF; $("folder").hidden=!inF;
+  if(inF){
+    $("ftitle").textContent=cat;
+    if(cat!==last){ last=cat; style=""; term=""; $("q").value="";
+      const l=[...new Set(PRODUCTS.filter(x=>x.cat===cat).map(x=>x.style).filter(Boolean))].sort();
+      $("style").innerHTML='<option value="">All styles</option>'+l.map(v=>`<option>${esc(v)}</option>`).join(""); }
+    grid();
+  }
+  if(p) openP(p); else { $("pv").hidden=true; document.body.style.overflow=""; }
+}
+addEventListener("hashchange",()=>{nav++;route();});
+
+function items(){ return Object.keys(cart).map(id => ({p:PRODUCTS.find(x=>x.id==id),q:cart[id]})); }
+function totals(){ return items().reduce((a,i)=>({n:a.n+i.q,t:a.t+i.q*i.p.price}),{n:0,t:0}); }
+
+function orderLink(){
+  const {t}=totals();
+  const lines=items().map(i=>{
+    const bits=[i.p.style,i.p.size].filter(Boolean).join(", ");
+    return `• ${i.p.name}${bits?" ("+bits+")":""} x ${i.q} = ${rs(i.p.price*i.q)}`+(i.p.image?"\n   Photo: "+new URL("images/"+i.p.image+".jpg",location.href).href:"");
+  }).join("\n");
+  const msg=`Hi Ring On.NGP! I'd like to order:\n\n${lines}\n\nTotal: ${rs(t)}\n\nName: ${$("nm").value.trim()}\nAddress: ${$("ad").value.trim()}`;
+  return `https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(msg)}`;
+}
+function update(){
+  const {n,t} = totals();
+  $("bar").classList.toggle("on", n>0);
+  $("barText").textContent = `${n} item${n===1?"":"s"} · ${rs(t)}`;
+  $("lines").innerHTML = items().map(i => `
+    <div class="line"><div><strong>${esc(i.p.name)}</strong><br>${rs(i.p.price)}</div>
+    <div class="qty"><button data-m="${i.p.id}" aria-label="Remove one">−</button><span>${i.q}</span><button data-a="${i.p.id}" aria-label="Add one">+</button></div></div>`).join("")
+    || "<p>Your cart is empty.</p>";
+  $("total").textContent = rs(t);
+  $("send").href = orderLink();
+  if(n===0) $("sheet").classList.remove("on");
+}
+$("lines").onclick = e => {
+  const a=e.target.dataset.a, m=e.target.dataset.m;
+  if(a){ const p=PRODUCTS.find(x=>x.id==a); if(cart[a]>=p.stock){ toast("Only "+p.stock+" in stock"); return; } cart[a]++; }
+  if(m){ cart[m]--; if(cart[m]<=0) delete cart[m]; }
+  update();
+};
+$("open").onclick = () => $("sheet").classList.add("on");
+$("close").onclick = () => $("sheet").classList.remove("on");
+$("sheet").onclick = e => { if(e.target===$("sheet")) $("sheet").classList.remove("on"); };
+$("nm").addEventListener("input",()=>{$("send").href=orderLink();});
+$("ad").addEventListener("input",()=>{$("send").href=orderLink();});
+$("send").addEventListener("click",e=>{
+  if(!$("nm").value.trim() || !$("ad").value.trim()){ e.preventDefault(); toast("Please add your name and delivery address."); }
+});
+
+home(); route(); update();
+</script>
+</body>
+</html>
