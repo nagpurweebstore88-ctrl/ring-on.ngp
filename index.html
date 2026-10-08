@@ -118,6 +118,17 @@ footer a{color:var(--ink);font-weight:700}
 .spec td:first-child{color:var(--dim);width:40%}
 .wa{display:block;text-align:center;margin-top:14px;color:#25D366;font-weight:700}
 
+
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px}
+.thumbs button{flex:0 0 64px;height:64px;padding:0;border:1px solid var(--edge);border-radius:2px;background:#0a0a0e;overflow:hidden;opacity:.65}
+.thumbs button.on{opacity:1;outline:2px solid #ececf0;outline-offset:1px}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.opt{margin-top:14px}
+.opt b{display:block;font-family:var(--label);letter-spacing:.05em;text-transform:uppercase;font-size:.8rem;color:var(--dim);margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-width:44px;padding:8px 14px;border:1px solid var(--edge);border-radius:2px;background:transparent;font-weight:700}
+.chips button.on{background:var(--chrome);color:#0a0a0d;border-color:transparent}
+
 .toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:20;max-width:calc(100vw - 32px);background:#17171d;border:1px solid var(--edge);padding:10px 16px;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
@@ -193,18 +204,28 @@ const SHOP = {
   instagram: "ring.on.ngp"
 };
 const CATEGORIES = ["Rings","Pendants","Chains","Earrings","Bracelets","More Accessories"];
-/* style: filter label such as "Gothic" or "Minimal". material and size are optional and shown on the product page.
-   stock: exact number in hand; at 0 it shows Sold out. image: file name inside the images folder without .jpg, like "skull-ring". tag: "New" or "".
-   The items below are SAMPLES. Replace them with your own products before you publish. */
+/* style: filter label such as "Gothic" or "Minimal". size: text shown on the product page.
+   sizes: optional list; if present the customer must pick one and it goes into the WhatsApp message.
+   colors: optional list of {n:"Silver", images:[...]}; each colour has its own photos.
+   images: photo names inside the images folder without .jpg (first one is the cover), like "rings/snake-ring-04".
+   stock: exact number in hand (at 0 it shows Sold out); use null if you do not want to track stock. tag: "New" or "". */
+const SIZES = ["6","7","8","9","10","11","12"];   // CHANGE to the sizes you really stock
 const PRODUCTS = [
-  {id:1,name:"Sample Ring 01",cat:"Rings",style:"Gothic",material:"",size:"Adjustable",note:"Sample item. Replace with your own piece.",stock:5,price:499,image:"",tag:"Sample"},
-  {id:2,name:"Sample Ring 02",cat:"Rings",style:"Minimal",material:"",size:"Adjustable",note:"Sample item. Replace with your own piece.",stock:1,price:399,image:"",tag:"Sample"},
-  {id:3,name:"Sample Pendant 01",cat:"Pendants",style:"Gothic",material:"",size:"",note:"Sample item. Replace with your own piece.",stock:3,price:599,image:"",tag:"Sample"},
-  {id:4,name:"Sample Chain 01",cat:"Chains",style:"Gothic",material:"",size:"20 in",note:"Sample item. Replace with your own piece.",stock:4,price:699,image:"",tag:"Sample"},
-  {id:5,name:"Sample Earrings 01",cat:"Earrings",style:"Gothic",material:"",size:"",note:"Sample item. Replace with your own piece.",stock:6,price:349,image:"",tag:"Sample"},
-  {id:6,name:"Sample Bracelet 01",cat:"Bracelets",style:"Gothic",material:"",size:"Adjustable",note:"Sample item. Replace with your own piece.",stock:3,price:549,image:"",tag:"Sample"},
-  {id:7,name:"Sample Accessory 01",cat:"More Accessories",style:"Gothic",material:"",size:"",note:"Sample item. Replace with your own piece.",stock:2,price:299,image:"",tag:"Sample"}
+  {id:1,name:"Snake Ring",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"The viral snake ring. Fits most fingers.",stock:null,price:99,tag:"Viral",
+    images:["rings/snake-ring-04","rings/snake-ring-01","rings/snake-ring-02","rings/snake-ring-03","rings/snake-ring-05","rings/snake-ring-06"]},
+  {id:2,name:"Basic Band Ring",cat:"Rings",style:"Minimal",material:"",size:"Different sizes",note:"Plain, slim band. Available in silver and gold.",stock:null,price:49,tag:"",
+    sizes:SIZES,
+    colors:[{n:"Silver",images:["rings/basic-band-ring-01","rings/basic-band-ring-02"]},{n:"Gold",images:["rings/basic-band-ring-gold-01","rings/basic-band-ring-gold-02"]}]},
+  {id:3,name:"Shenron Dragon Ring",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"A coiled dragon wraps around your finger.",stock:null,price:149,tag:"",kw:"shenron dragon",
+    images:["rings/dragon-ring-04","rings/dragon-ring-01","rings/dragon-ring-02","rings/dragon-ring-03"]},
+  {id:4,name:"Phoenix Eagle Ring",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"Wings spread wide. A bold statement ring.",stock:null,price:149,tag:"",kw:"phoenix eagle wings",
+    sizes:SIZES,images:["rings/phoenix-eagle-ring-02","rings/phoenix-eagle-ring-04","rings/phoenix-eagle-ring-01","rings/phoenix-eagle-ring-03"]},
+  {id:5,name:"Crown Ring",cat:"Rings",style:"Royal",material:"",size:"Different sizes",note:"A fine crown pattern all the way round.",stock:null,price:149,tag:"",kw:"crown king queen",
+    sizes:SIZES,images:["rings/crown-ring-03","rings/crown-ring-04","rings/crown-ring-01","rings/crown-ring-02"]},
+  {id:6,name:"Chrome Cross Ring 1",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"Open-work cross design with a chrome finish.",stock:null,price:199,tag:"New",kw:"cross chrome",
+    images:["rings/chrome-cross-ring-1-03","rings/chrome-cross-ring-1-02","rings/chrome-cross-ring-1-01"]}
 ];
+PRODUCTS.forEach(p=>{ if(p.colors) p.images=p.colors[0].images; p.image=(p.images&&p.images[0])||""; });
 /* ===== END EDIT SECTION ===== */
 
 const $ = id => document.getElementById(id);
@@ -243,6 +264,9 @@ $("call1").href = "tel:+" + SHOP.call;
 
 function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("on"),2800); }
 
+const hasOpts = p => !!(p.sizes||p.colors);
+const inCart = id => Object.keys(cart).filter(k=>k.split("|")[0]==id).reduce((n,k)=>n+cart[k],0);
+const sold = p => p.stock!==null && p.stock<=0;
 const imgTag = (p,alt) => `<img src="images/${esc(p.image)}.jpg" alt="${esc(alt)}" loading="lazy" onerror="this.remove()">`;
 
 function grid(){
@@ -253,24 +277,36 @@ function grid(){
     <article class="card" data-id="${p.id}" tabindex="0">
       <div class="pic">
         ${iconFor(p.cat)}${p.image ? imgTag(p,p.name) : ""}
-        ${p.stock<=0 ? '<span class="tag">Sold out</span>' : p.stock<=2 ? `<span class="tag">Only ${p.stock} left</span>` : p.tag ? `<span class="tag">${esc(p.tag)}</span>` : ""}
+        ${sold(p) ? '<span class="tag">Sold out</span>' : p.stock!==null&&p.stock<=2 ? `<span class="tag">Only ${p.stock} left</span>` : p.tag ? `<span class="tag">${esc(p.tag)}</span>` : ""}
       </div>
       <div class="info">
         <div class="name">${esc(p.name)}</div>
-        <div class="meta">${esc([p.style,p.material,p.size].filter(Boolean).join(", ") || p.cat)}</div>
-        <div class="meta">${p.stock>0 ? p.stock+" in stock" : "Out of stock"}</div>
+        <div class="meta">${esc([p.style,p.colors?p.colors.map(c=>c.n).join(" / "):"",p.size].filter(Boolean).join(", ") || p.cat)}</div>
+        ${p.stock!==null?`<div class="meta">${p.stock>0 ? p.stock+" in stock" : "Out of stock"}</div>`:""}
         <div class="price">${rs(p.price)}</div>
-        <button class="add" data-id="${p.id}" ${p.stock<=0?"disabled":""}>${p.stock<=0?"Sold out":"Add to cart"}</button>
+        <button class="add" data-id="${p.id}" ${sold(p)?"disabled":""}>${sold(p)?"Sold out":hasOpts(p)?"Choose options":"Add to cart"}</button>
       </div>
     </article>`).join("") : '<p class="empty">Nothing here yet. New pieces are coming soon.</p>';
 }
-function add(id){
+function add(id,color,size){
   const p = PRODUCTS.find(x=>x.id==id);
-  if((cart[id]||0)>=p.stock){ toast("Only "+p.stock+" in stock for "+p.name); return; }
-  cart[id]=(cart[id]||0)+1; update(); toast(p.name+" added to your cart");
+  if(p.stock!==null && inCart(id)>=p.stock){ toast("Only "+p.stock+" in stock for "+p.name); return; }
+  const k=[id,color||"",size||""].join("|");
+  cart[k]=(cart[k]||0)+1; update(); toast(p.name+" added to your cart");
 }
+let sel={color:"",size:""};
 document.addEventListener("click",e=>{
-  const b=e.target.closest(".add"); if(b){ e.stopPropagation(); add(b.dataset.id); return; }
+  const b=e.target.closest(".add"); if(b){ e.stopPropagation();
+    const p=PRODUCTS.find(x=>x.id==b.dataset.id);
+    if(b.closest("#pd")){
+      if(p.colors&&!sel.color){ toast("Please choose a colour"); return; }
+      if(p.sizes&&!sel.size){ toast("Please choose a size"); return; }
+      add(p.id,sel.color,sel.size);
+    } else if(hasOpts(p)) location.hash="#/p/"+p.id; else add(p.id);
+    return; }
+  const th=e.target.closest("[data-th]"); if(th){ showImg(th.dataset.th); return; }
+  const co=e.target.closest("[data-co]"); if(co){ pickColor(co.dataset.co); return; }
+  const sz=e.target.closest("[data-sz]"); if(sz){ sel.size=sz.dataset.sz; document.querySelectorAll("[data-sz]").forEach(x=>x.classList.toggle("on",x===sz)); return; }
   const c=e.target.closest("#grid .card"); if(c) location.hash="#/p/"+c.dataset.id;
   const f=e.target.closest("[data-f]"); if(f) location.hash="#/c/"+encodeURIComponent(f.dataset.f);
 });
@@ -306,19 +342,34 @@ zb.addEventListener("wheel",e=>{e.preventDefault();zset(z.s*(e.deltaY<0?1.15:1/1
 zb.addEventListener("dblclick",()=>zset(z.s>1?1:2.5));
 $("zin").onclick=()=>zset(z.s*1.5); $("zout").onclick=()=>zset(z.s/1.5); $("zreset").onclick=()=>zset(1);
 
+let curP=null;
+function showImg(src){
+  const im=$("zimg"); z={s:1,x:0,y:0}; im.hidden=false; im.src="images/"+src+".jpg"; im.alt=curP.name; $("zico").innerHTML=""; zapply();
+  document.querySelectorAll("[data-th]").forEach(x=>x.classList.toggle("on",x.dataset.th===src));
+}
+function thumbsHtml(list){ return list.length>1 ? `<div class="thumbs" id="thumbs">${list.map(f=>`<button data-th="${esc(f)}" aria-label="Show photo"><img src="images/${esc(f)}.jpg" alt="" loading="lazy"></button>`).join("")}</div>` : ""; }
+function pickColor(n){
+  sel.color=n; const c=curP.colors.find(x=>x.n===n);
+  document.querySelectorAll("[data-co]").forEach(x=>x.classList.toggle("on",x.dataset.co===n));
+  $("thumbwrap").innerHTML=thumbsHtml(c.images); showImg(c.images[0]);
+}
 function openP(p){
-  z={s:1,x:0,y:0}; const im=$("zimg");
+  curP=p; sel={color:"",size:""}; z={s:1,x:0,y:0}; const im=$("zimg");
   im.onerror=()=>{ im.hidden=true; $("zico").innerHTML=iconFor(p.cat); };
   im.hidden=!p.image; im.removeAttribute("src");
   if(p.image){ im.src="images/"+p.image+".jpg"; im.alt=p.name; $("zico").innerHTML=""; } else $("zico").innerHTML=iconFor(p.cat);
   zapply();
-  const rows=[["Style",p.style],["Material",p.material],["Size",p.size],["Category",p.cat],["Details",p.note],["Availability",p.stock>0?(p.stock<=2?"Only "+p.stock+" left":p.stock+" in stock"):"Sold out"]].filter(r=>r[1]);
+  const rows=[["Style",p.style],["Material",p.material],["Size",p.size],["Category",p.cat],["Details",p.note],["Availability",p.stock===null?"":p.stock>0?(p.stock<=2?"Only "+p.stock+" left":p.stock+" in stock"):"Sold out"]].filter(r=>r[1]);
   const q=encodeURIComponent(`Hi Ring On.NGP! I have a question about ${p.name} (${rs(p.price)}).`);
-  $("pd").innerHTML=`<h2 class="pn chrome">${esc(p.name)}</h2><div class="price">${rs(p.price)}</div>
-  <button class="add" data-id="${p.id}" ${p.stock<=0?"disabled":""}>${p.stock<=0?"Sold out":"Add to cart"}</button>
+  $("pd").innerHTML=`<div id="thumbwrap">${thumbsHtml(p.images||[])}</div>
+  <h2 class="pn chrome">${esc(p.name)}</h2><div class="price">${rs(p.price)}</div>
+  ${p.colors?`<div class="opt"><b>Colour</b><div class="chips">${p.colors.map(c=>`<button data-co="${esc(c.n)}">${esc(c.n)}</button>`).join("")}</div></div>`:""}
+  ${p.sizes?`<div class="opt"><b>Size</b><div class="chips">${p.sizes.map(v=>`<button data-sz="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>`:""}
+  <div class="opt"><button class="add" data-id="${p.id}" ${sold(p)?"disabled":""}>${sold(p)?"Sold out":"Add to cart"}</button></div>
   <table class="spec">${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table>
   <p class="note">We confirm every order on WhatsApp. Delivery details and charges are shared in chat.</p>
   <a class="wa" target="_blank" rel="noopener" href="https://wa.me/${SHOP.whatsapp}?text=${q}">Ask about this on WhatsApp</a>`;
+  const f=document.querySelector("[data-th]"); if(f) f.classList.add("on");
   $("pv").hidden=false; $("pv").scrollTop=0; document.body.style.overflow="hidden";
 }
 function route(){
@@ -337,14 +388,15 @@ function route(){
 }
 addEventListener("hashchange",()=>{nav++;route();});
 
-function items(){ return Object.keys(cart).map(id => ({p:PRODUCTS.find(x=>x.id==id),q:cart[id]})); }
+function items(){ return Object.keys(cart).map(k => { const [id,color,size]=k.split("|"); return {k,p:PRODUCTS.find(x=>x.id==id),color,size,q:cart[k]}; }); }
 function totals(){ return items().reduce((a,i)=>({n:a.n+i.q,t:a.t+i.q*i.p.price}),{n:0,t:0}); }
+const vtxt = i => [i.color,i.size?"Size "+i.size:""].filter(Boolean).join(", ");
 
 function orderLink(){
   const {t}=totals();
   const lines=items().map(i=>{
-    const bits=[i.p.style,i.p.size].filter(Boolean).join(", ");
-    return `• ${i.p.name}${bits?" ("+bits+")":""} x ${i.q} = ${rs(i.p.price*i.q)}`+(i.p.image?"\n   Photo: "+new URL("images/"+i.p.image+".jpg",location.href).href:"");
+    const bits=[i.p.style,vtxt(i)].filter(Boolean).join(", ");
+    return `• ${i.p.name}${bits?" ("+bits+")":""} x ${i.q} = ${rs(i.p.price*i.q)}`+(i.p.image?"\n   Photo: "+new URL("images/"+((i.p.colors&&i.p.colors.find(c=>c.n===i.color)||{images:[i.p.image]}).images[0])+".jpg",location.href).href:"");
   }).join("\n");
   const msg=`Hi Ring On.NGP! I'd like to order:\n\n${lines}\n\nTotal: ${rs(t)}\n\nName: ${$("nm").value.trim()}\nAddress: ${$("ad").value.trim()}`;
   return `https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(msg)}`;
@@ -354,8 +406,8 @@ function update(){
   $("bar").classList.toggle("on", n>0);
   $("barText").textContent = `${n} item${n===1?"":"s"} · ${rs(t)}`;
   $("lines").innerHTML = items().map(i => `
-    <div class="line"><div><strong>${esc(i.p.name)}</strong><br>${rs(i.p.price)}</div>
-    <div class="qty"><button data-m="${i.p.id}" aria-label="Remove one">−</button><span>${i.q}</span><button data-a="${i.p.id}" aria-label="Add one">+</button></div></div>`).join("")
+    <div class="line"><div><strong>${esc(i.p.name)}</strong>${vtxt(i)?`<br><small>${esc(vtxt(i))}</small>`:""}<br>${rs(i.p.price)}</div>
+    <div class="qty"><button data-m="${esc(i.k)}" aria-label="Remove one">−</button><span>${i.q}</span><button data-a="${esc(i.k)}" aria-label="Add one">+</button></div></div>`).join("")
     || "<p>Your cart is empty.</p>";
   $("total").textContent = rs(t);
   $("send").href = orderLink();
@@ -363,7 +415,7 @@ function update(){
 }
 $("lines").onclick = e => {
   const a=e.target.dataset.a, m=e.target.dataset.m;
-  if(a){ const p=PRODUCTS.find(x=>x.id==a); if(cart[a]>=p.stock){ toast("Only "+p.stock+" in stock"); return; } cart[a]++; }
+  if(a){ const p=PRODUCTS.find(x=>x.id==a.split("|")[0]); if(p.stock!==null && inCart(p.id)>=p.stock){ toast("Only "+p.stock+" in stock"); return; } cart[a]++; }
   if(m){ cart[m]--; if(cart[m]<=0) delete cart[m]; }
   update();
 };
