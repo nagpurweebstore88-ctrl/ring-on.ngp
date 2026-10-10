@@ -206,7 +206,7 @@ const SHOP = {
 const CATEGORIES = ["Rings","Pendants","Chains","Earrings","Bracelets","More Accessories"];
 /* style: filter label such as "Gothic" or "Minimal". size: text shown on the product page.
    sizes: optional list; if present the customer must pick one and it goes into the WhatsApp message.
-   colors: optional list of {n:"Silver", images:[...]}; each colour has its own photos.
+   colors: optional list of {n:"Silver", images:[]}; each colour has its own photos.
    images: photo names inside the images folder without .jpg (first one is the cover), like "rings/snake-ring-04".
    stock: exact number in hand (at 0 it shows Sold out); use null if you do not want to track stock. tag: "New" or "". */
 const SIZES = ["6","7","8","9","10","11","12"];   // CHANGE to the sizes you really stock
@@ -217,52 +217,74 @@ const PRODUCTS = [
     sizes:SIZES,
     colors:[{n:"Silver",images:["rings/basic-band-ring-01","rings/basic-band-ring-02"]},{n:"Gold",images:["rings/basic-band-ring-gold-01","rings/basic-band-ring-gold-02"]}]},
   {id:3,name:"Shenron Dragon Ring",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"A coiled dragon wraps around your finger.",stock:null,price:149,tag:"",kw:"shenron dragon",
-    images:["rings/dragon-ring-04","rings/dragon-ring-01","rings/dragon-ring-02","rings/dragon-ring-03"]},
+    images:["rings/dragon-ring-01","rings/dragon-ring-04","rings/dragon-ring-02","rings/dragon-ring-03"]},
   {id:4,name:"Phoenix Eagle Ring",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"Wings spread wide. A bold statement ring.",stock:null,price:149,tag:"",kw:"phoenix eagle wings",
     sizes:SIZES,images:["rings/phoenix-eagle-ring-02","rings/phoenix-eagle-ring-04","rings/phoenix-eagle-ring-01","rings/phoenix-eagle-ring-03"]},
   {id:5,name:"Crown Ring",cat:"Rings",style:"Royal",material:"",size:"Different sizes",note:"A fine crown pattern all the way round.",stock:null,price:149,tag:"",kw:"crown king queen",
     sizes:SIZES,images:["rings/crown-ring-03","rings/crown-ring-04","rings/crown-ring-01","rings/crown-ring-02"]},
   {id:6,name:"Chrome Cross Ring 1",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"Open-work cross design with a chrome finish.",stock:null,price:199,tag:"New",kw:"cross chrome",
-    images:["rings/chrome-cross-ring-1-03","rings/chrome-cross-ring-1-02","rings/chrome-cross-ring-1-01"]},
+    images:["rings/chrome-cross-ring-1-02","rings/chrome-cross-ring-1-03","rings/chrome-cross-ring-1-01"]},
   {id:7,name:"Butterfly Ring 1",cat:"Rings",style:"Cute",material:"",size:"Different sizes",note:"Black enamel butterfly with sparkling stones. Silver and golden.",stock:null,price:50,tag:"New",kw:"butterfly",
     sizes:SIZES,
     colors:[{n:"Gold",images:["rings/butterfly-ring-1-gold-04","rings/butterfly-ring-1-gold-03","rings/butterfly-ring-1-gold-01","rings/butterfly-ring-1-gold-02"]},{n:"Silver",images:["rings/butterfly-ring-1-silver-04","rings/butterfly-ring-1-silver-03","rings/butterfly-ring-1-silver-01","rings/butterfly-ring-1-silver-02"]}]},
   {id:8,name:"Butterfly Ring 2",cat:"Rings",style:"Cute",material:"",size:"Different sizes",note:"Silver butterfly ring with a delicate finish.",stock:null,price:50,tag:"",kw:"butterfly",
-    sizes:SIZES,images:["rings/butterfly-ring-2-silver-01","rings/butterfly-ring-2-silver-02","rings/butterfly-ring-2-silver-03"]},
+    sizes:SIZES,images:["rings/butterfly-ring-2-silver-02","rings/butterfly-ring-2-silver-01","rings/butterfly-ring-2-silver-03"]},
   {id:9,name:"Feather Arrow Ring",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"A feather and arrow wrapped around your finger. Fits most fingers.",stock:null,price:150,tag:"",kw:"feather arrow wrap",
-    images:["rings/feather-arrow-ring-01","rings/feather-arrow-ring-02","rings/feather-arrow-ring-03","rings/feather-arrow-ring-04","rings/feather-arrow-ring-05"]},
+    images:["rings/feather-arrow-ring-02","rings/feather-arrow-ring-01","rings/feather-arrow-ring-03","rings/feather-arrow-ring-04","rings/feather-arrow-ring-05"]},
   {id:10,name:"Broad Silver Stainless Steel Ring",cat:"Rings",style:"Minimal",material:"",size:"Different sizes",note:"Broad polished stainless steel band. Does not rust.",stock:null,price:99,tag:"",kw:"broad steel stainless band",
-    sizes:SIZES,images:["rings/broad-steel-ring-01","rings/broad-steel-ring-02","rings/broad-steel-ring-03","rings/broad-steel-ring-04","rings/broad-steel-ring-05"]},
+    sizes:SIZES,images:["rings/broad-steel-ring-03","rings/broad-steel-ring-01","rings/broad-steel-ring-02","rings/broad-steel-ring-04","rings/broad-steel-ring-05"]},
   {id:11,name:"Evil Eye Ring 1",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"Evil eye stone to ward off bad vibes.",stock:null,price:50,tag:"",kw:"evil eye nazar",
-    sizes:SIZES,images:["rings/evil-eye-ring-1-01","rings/evil-eye-ring-1-02","rings/evil-eye-ring-1-03","rings/evil-eye-ring-1-04"]},
+    sizes:SIZES,images:["rings/evil-eye-ring-1-03","rings/evil-eye-ring-1-01","rings/evil-eye-ring-1-02","rings/evil-eye-ring-1-04"]},
   {id:12,name:"Wooden Band Ring",cat:"Rings",style:"Classic",material:"",size:"Different sizes",note:"Real wood inlay set in a steel band. Silver and black edges.",stock:null,price:150,tag:"",kw:"wood wooden band",
-    sizes:SIZES,colors:[{n:"Silver",images:["rings/wooden-band-ring-silver-01","rings/wooden-band-ring-silver-02"]},{n:"Black",images:["rings/wooden-band-ring-black-01","rings/wooden-band-ring-black-02"]}]},
+    sizes:SIZES,colors:[{n:"Silver",images:["rings/wooden-band-ring-silver-02","rings/wooden-band-ring-silver-01"]},{n:"Black",images:["rings/wooden-band-ring-black-02","rings/wooden-band-ring-black-01"]}]},
   {id:13,name:"Cut Silver Band Ring",cat:"Rings",style:"Classic",material:"",size:"Different sizes",note:"Silver band with diamond-cut faces that catch the light.",stock:null,price:150,tag:"",kw:"silver cut band diamond",
     sizes:SIZES,images:["rings/cut-silver-band-ring-01","rings/cut-silver-band-ring-02","rings/cut-silver-band-ring-worn-01","rings/cut-silver-band-ring-worn-02"]},
   {id:14,name:"Black Band Ring with Silver Borders",cat:"Rings",style:"Classic",material:"",size:"Different sizes",note:"Black centre with sharp silver borders.",stock:null,price:150,tag:"",kw:"black band silver border",
     sizes:SIZES,images:["rings/black-band-ring-silver-border-01","rings/black-band-ring-silver-border-02","rings/black-band-ring-silver-border-worn-01","rings/black-band-ring-silver-border-worn-02","rings/black-band-ring-silver-border-worn-03"]},
   {id:15,name:"Spinner Chain Band Ring",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"A chain that spins around the band. Great fidget ring. Silver and black.",stock:null,price:150,tag:"",kw:"spinner chain band fidget",
-    sizes:SIZES,colors:[{n:"Silver",images:["rings/spinner-chain-band-ring-silver-01","rings/spinner-chain-band-ring-silver-02","rings/spinner-chain-band-ring-silver-worn-01","rings/spinner-chain-band-ring-silver-worn-02"]},{n:"Black",images:["rings/spinner-chain-band-ring-black-01","rings/spinner-chain-band-ring-black-02","rings/spinner-chain-band-ring-black-worn-01","rings/spinner-chain-band-ring-black-worn-02"]}]},
+    sizes:SIZES,colors:[{n:"Silver",images:["rings/spinner-chain-band-ring-silver-02","rings/spinner-chain-band-ring-silver-01","rings/spinner-chain-band-ring-silver-worn-01","rings/spinner-chain-band-ring-silver-worn-02"]},{n:"Black",images:["rings/spinner-chain-band-ring-black-01","rings/spinner-chain-band-ring-black-02","rings/spinner-chain-band-ring-black-worn-01","rings/spinner-chain-band-ring-black-worn-02"]}]},
   {id:16,name:"Matt Black Band Ring",cat:"Rings",style:"Minimal",material:"",size:"Different sizes",note:"Smooth matt black finish. Simple and clean.",stock:null,price:150,tag:"",kw:"matt matte black band",
     sizes:SIZES,images:["rings/matt-black-band-ring-01","rings/matt-black-band-ring-02"]},
   {id:17,name:"Gloss Black Band Ring",cat:"Rings",style:"Minimal",material:"",size:"Different sizes",note:"Mirror-shine black band.",stock:null,price:150,tag:"",kw:"gloss glossy black band",
-    sizes:SIZES,images:["rings/gloss-black-band-ring-01","rings/gloss-black-band-ring-02","rings/gloss-black-band-ring-worn-01","rings/gloss-black-band-ring-worn-02"]},
+    sizes:SIZES,images:["rings/gloss-black-band-ring-02","rings/gloss-black-band-ring-01","rings/gloss-black-band-ring-worn-01","rings/gloss-black-band-ring-worn-02"]},
   {id:18,name:"Black Stone Ring",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"Long oval black stone in an antique silver setting.",stock:null,price:150,tag:"",kw:"black stone onyx oval",
     sizes:SIZES,images:["rings/black-stone-ring-long-01","rings/black-stone-ring-long-02"]},
   {id:19,name:"Scorpion Tail Ring",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"A scorpion wrapped around your finger with a red stone. Fits most fingers.",stock:null,price:150,tag:"",kw:"scorpion tail red stone wrap",
     images:["rings/scorpion-tail-ring-01","rings/scorpion-tail-ring-02","rings/scorpion-tail-ring-03","rings/scorpion-tail-ring-worn-01","rings/scorpion-tail-ring-worn-02"]},
   {id:20,name:"Leaf Ring",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"Silver leaf on black enamel with engraved flowers on the sides.",stock:null,price:150,tag:"",kw:"leaf signet",
-    sizes:SIZES,images:["rings/leaf-ring-01","rings/leaf-ring-02","rings/leaf-ring-worn-01","rings/leaf-ring-worn-02"]},
+    sizes:SIZES,images:["rings/leaf-ring-02","rings/leaf-ring-01","rings/leaf-ring-worn-01","rings/leaf-ring-worn-02"]},
   {id:21,name:"Knights Shield Ring",cat:"Rings",style:"Royal",material:"",size:"Different sizes",note:"Sword and shield crest with engraved sides.",stock:null,price:150,tag:"",kw:"knight shield sword crest",
-    sizes:SIZES,images:["rings/knights-shield-ring-01","rings/knights-shield-ring-02","rings/knights-shield-ring-worn-01","rings/knights-shield-ring-worn-02"]},
+    sizes:SIZES,images:["rings/knights-shield-ring-02","rings/knights-shield-ring-01","rings/knights-shield-ring-worn-01","rings/knights-shield-ring-worn-02"]},
   {id:22,name:"Trinity Ring",cat:"Rings",style:"Gothic",material:"",size:"Different sizes",note:"Celtic trinity knot signet.",stock:null,price:150,tag:"",kw:"trinity celtic knot signet",
-    sizes:SIZES,images:["rings/trinity-ring-01","rings/trinity-ring-02","rings/trinity-ring-worn-01","rings/trinity-ring-worn-02"]},
+    sizes:SIZES,images:["rings/trinity-ring-02","rings/trinity-ring-01","rings/trinity-ring-worn-01","rings/trinity-ring-worn-02"]},
   {id:23,name:"Yin Yang Ring",cat:"Rings",style:"Classic",material:"",size:"Different sizes",note:"Black and white enamel yin yang signet.",stock:null,price:150,tag:"",kw:"yin yang signet",
-    sizes:SIZES,images:["rings/yin-yang-ring-01","rings/yin-yang-ring-02"]},
+    sizes:SIZES,images:["rings/yin-yang-ring-02","rings/yin-yang-ring-01"]},
   {id:24,name:"Black Circle Ring",cat:"Rings",style:"Minimal",material:"",size:"Different sizes",note:"Round black face on a polished silver band.",stock:null,price:150,tag:"",kw:"black circle round signet",
-    sizes:SIZES,images:["rings/black-circle-ring-01","rings/black-circle-ring-02"]},
+    sizes:SIZES,images:["rings/black-circle-ring-02","rings/black-circle-ring-01"]},
   {id:25,name:"Dragon Wrap Ring",cat:"Rings",style:"Gothic",material:"",size:"Free size (adjustable)",note:"A dragon wraps its scaled body around your finger. Fits most fingers.",stock:null,price:150,tag:"",kw:"dragon wrap",
-    images:["rings/dragon-wrap-ring-01","rings/dragon-wrap-ring-02"]}
+    images:["rings/dragon-wrap-ring-02","rings/dragon-wrap-ring-01"]},
+  {id:26,name:"Twin Serpent Heart Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Two coiled serpents forming a heart. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"serpent snake heart pendant chain",
+    images:["pendants/twin-serpent-heart-pendant-01","pendants/twin-serpent-heart-pendant-02"]},
+  {id:27,name:"Compass Star Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Round compass medallion with a gold-tone star. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"compass star pendant chain",
+    images:["pendants/compass-star-pendant-01"]},
+  {id:28,name:"Sun Wheel Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Engraved sun wheel (kolovrat) medallion. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"sun wheel kolovrat pendant chain",
+    images:["pendants/sun-wheel-pendant-01"]},
+  {id:29,name:"Lion Shield Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"A lion head set on a studded shield. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"lion shield pendant chain",
+    images:["pendants/lion-shield-pendant-01","pendants/lion-shield-pendant-02"]},
+  {id:30,name:"Angel Wing Cross Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Winged cross with a black stone centre. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"angel wing cross pendant chain",
+    images:["pendants/angel-wing-cross-pendant-01","pendants/angel-wing-cross-pendant-02"]},
+  {id:31,name:"Winged Skull Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Skull with a dagger between feathered wings. Box chain included, deep (long) length.",stock:6,price:150,tag:"",kw:"skull wings sword dagger pendant chain",
+    images:["pendants/winged-skull-pendant-01","pendants/winged-skull-pendant-02"]},
+  {id:32,name:"Bat Wing Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Sleek bat-wing cut-out pendant. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"bat wing pendant chain",
+    images:["pendants/bat-wing-pendant-01","pendants/bat-wing-pendant-02"]},
+  {id:33,name:"Headphone Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Tiny headphones for music lovers. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"headphone music pendant chain",
+    images:["pendants/headphone-pendant-01","pendants/headphone-pendant-02"]},
+  {id:34,name:"Fish Hook Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Carved tribal-style fish hook. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"fish hook tribal pendant chain",
+    images:["pendants/fish-hook-pendant-01","pendants/fish-hook-pendant-02"]},
+  {id:35,name:"Crystal Cross Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Slim cross with an inlaid centre stone. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"cross crystal pendant chain",
+    images:["pendants/crystal-cross-pendant-01","pendants/crystal-cross-pendant-02"]},
+  {id:36,name:"Pentagram Pendant",cat:"Pendants",style:"Gothic",material:"",size:"One size. Comes with a box chain (deep / long length).",note:"Polished pentagram in a circle. Box chain included, deep (long) length.",stock:3,price:150,tag:"",kw:"pentagram star pendant chain",
+    images:["pendants/pentagram-pendant-01","pendants/pentagram-pendant-02"]}
 ];
 PRODUCTS.forEach(p=>{ if(p.colors) p.images=p.colors[0].images; p.image=(p.images&&p.images[0])||""; });
 /* ===== END EDIT SECTION ===== */
@@ -435,7 +457,7 @@ function orderLink(){
   const {t}=totals();
   const lines=items().map(i=>{
     const bits=[i.p.style,vtxt(i)].filter(Boolean).join(", ");
-    return `• ${i.p.name}${bits?" ("+bits+")":""} x ${i.q} = ${rs(i.p.price*i.q)}`+(i.p.image?"\n   Photo: "+new URL("images/"+((i.p.colors&&i.p.colors.find(c=>c.n===i.color)||{images:[i.p.image]}).images[0])+".jpg",location.href).href:"");
+    return `• ${i.p.name}${bits?" ("+bits+")":""} x ${i.q} = ${rs(i.p.price*i.q)}`+(i.p.image?"\n   Photo: "+new URL("images/"+((i.p.colors&&i.p.colors.find(c=>c.n===i.color)||{images:[]}).images[0])+".jpg",location.href).href:"");
   }).join("\n");
   const msg=`Hi Ring On.NGP! I'd like to order:\n\n${lines}\n\nTotal: ${rs(t)}\n\nName: ${$("nm").value.trim()}\nAddress: ${$("ad").value.trim()}`;
   return `https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(msg)}`;
