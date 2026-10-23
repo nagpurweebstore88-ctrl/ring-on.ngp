@@ -399,10 +399,11 @@ $("pback").onclick=()=>{ nav>0 ? history.back() : location.hash="#/c/"+encodeURI
 $("style").onchange=e=>{style=e.target.value;grid();};
 $("q").oninput=e=>{term=e.target.value.toLowerCase();grid();};
 
+const COVERS={"Rings":"rings","Pendants":"pendants","Bracelets":"bracelets"};
 function home(){
   $("folders").innerHTML = CATEGORIES.map(c=>{
-    const l=PRODUCTS.filter(p=>p.cat===c), cv=l.find(p=>p.image);
-    return `<button class="fold" data-f="${esc(c)}"><div class="cov">${iconFor(c)}${cv?imgTag(cv,""):""}</div><b class="chrome">${esc(c)}</b><small>${l.length?l.length+" piece"+(l.length>1?"s":""):"Coming soon"}</small></button>`;
+    const l=PRODUCTS.filter(p=>p.cat===c), cv=l.find(p=>p.image), cc=COVERS[c];
+    return `<button class="fold" data-f="${esc(c)}"><div class="cov">${iconFor(c)}${cc?`<img src="images/covers/${cc}.jpg" alt="${esc(c)}">`:(cv?imgTag(cv,""):"")}</div><b class="chrome">${esc(c)}</b><small>${l.length?l.length+" piece"+(l.length>1?"s":""):"Coming soon"}</small></button>`;
   }).join("");
 }
 
